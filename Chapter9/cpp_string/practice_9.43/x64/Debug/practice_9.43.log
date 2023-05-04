@@ -1,0 +1,4 @@
+﻿  main.cpp
+D:\StudyFiles\C++Primer\cpp_string\practice_9.43\main.cpp(55,31): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+D:\StudyFiles\C++Primer\cpp_string\practice_9.43\main.cpp(58,21): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
+  practice_9.43.vcxproj -> D:\StudyFiles\C++Primer\cpp_string\mystring\x64\Debug\practice_9.43.exe
