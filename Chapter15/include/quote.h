@@ -13,7 +13,9 @@ public:
   virtual void debug() {
     std::cout << "bookNo=" << bookNo_ << " price=" << price_ << std::endl;
   }
-  virtual ~Quote() = default;
+  virtual ~Quote() {
+    std::cout << "destory Quote" << std::endl;
+  }
 
 private:
   std::string bookNo_;
@@ -28,6 +30,9 @@ public:
   DiscQuote(const std::string &book, double price, size_t qty, double disc) : 
     Quote(book, price), quantity_(qty), discount_(disc) { } 
   double net_price(size_t n) const = 0;
+  virtual ~DiscQuote() override {
+    std::cout << "destory DiscQuote" << std::endl;
+  }
 
 protected:
   size_t quantity_ = 0;
@@ -49,6 +54,9 @@ public:
   void debug() override {
     Quote::debug();
     std::cout << "qty=" << quantity_ << " discount=" << discount_ << std::endl;
+  }
+  virtual ~BulkQuote() override {
+    std::cout << "destory BulkQuote" << std::endl;
   }
 };
 
