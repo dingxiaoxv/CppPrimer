@@ -1,4 +1,5 @@
 #include "hasptr.h"
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
@@ -35,6 +36,18 @@ int main(int argc, char *argv[]) {
   std::cout << "间接初始化和赋值： " << std::endl;
   HasPtr hp_copy = hp;
   hp_copy = hp;
+  std::cout << std::endl;
+
+  std::vector<HasPtr> vh;
+  for (int i = 0; i < 5; i++)
+    vh.push_back(std::to_string(5 - i));
+  for (auto p : vh)
+    std::cout << *p << " ";
+  std::cout << std::endl;
+
+  std::sort(vh.begin(), vh.end());
+  for (auto p : vh)
+    std::cout << *p << " ";
   std::cout << std::endl;
 
   std::cout << "程序结束： " << std::endl;
