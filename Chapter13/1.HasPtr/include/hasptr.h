@@ -17,6 +17,13 @@ public:
     ps_ = new std::string(*hp.ps_);
     val_ = hp.val_;
   }
+  HasPtr(HasPtr &&hp) noexcept : ps_(hp.ps_), val_(hp.val_) {
+    hp.ps_ = nullptr;
+  }
+  // HasPtr &operator=(HasPtr rhs) {
+  //   swap(*this, rhs);
+  //   return *this;
+  // }
   HasPtr &operator=(const HasPtr &rhs) {
     std::cout << "copy-assignment operator" << std::endl;
     auto newp = new std::string(*rhs.ps_); // 先拷贝再释放，防止自赋值
@@ -27,15 +34,33 @@ public:
     val_ = rhs.val_;
     return *this;
   }
+  HasPtr &operator=(HasPtr &&rhs) {
+    std::cout << "move-assignment operator" << std::endl;
+    if (this != &rhs) {
+      if (ps_) {
+        delete ps_;
+      }
+      ps_ = rhs.ps_;
+      val_ = rhs.val_;
+      rhs.ps_ = nullptr;
+      rhs.val_ = 0;
+    }
+    return *this;
+  }
   std::string &operator*() const { return *ps_; }
   bool operator<(const HasPtr &rhs) const { return *ps_ < *rhs.ps_; }
-  void print() { std::cout << "print func" << std::endl; }
   ~HasPtr() {
     std::cout << "destructor" << std::endl;
     if (ps_) {
       delete ps_;
     }
   }
+  void swap(HasPtr &lhs, HasPtr &rhs) {
+    using std::swap;
+    swap(lhs.ps_, rhs.ps_);
+    swap(lhs.val_, rhs.val_);
+  }
+  void print() { std::cout << "print func" << std::endl; }
 
 private:
   std::string *ps_;

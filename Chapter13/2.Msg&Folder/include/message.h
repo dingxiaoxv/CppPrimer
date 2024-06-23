@@ -12,6 +12,7 @@ class Message {
 public:
   Message(const std::string &s = "") : contents_(s) {}
   Message(const Message &);
+  Message(Message &&);
   Message &operator=(const Message &);
   ~Message();
   void saveTo(Folder &);
@@ -22,6 +23,7 @@ public:
 private:
   void addToFolders(const Message &);
   void removeFromFolders();
+  void moveFolders(Message *);
 
 private:
   std::string contents_;

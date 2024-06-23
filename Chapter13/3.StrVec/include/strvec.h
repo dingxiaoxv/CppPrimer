@@ -9,9 +9,12 @@ public:
   StrVec() : elements_(nullptr), first_free_(nullptr), cap_(nullptr) {}
   StrVec(std::initializer_list<std::string> il);
   StrVec(const StrVec &);
+  StrVec(StrVec &&) noexcept;
   StrVec &operator=(const StrVec &);
+  StrVec&operator=(StrVec &&);
   ~StrVec();
   void push_back(const std::string &);
+  void push_back(std::string &&);
   void reserve(size_t n) {
     if (n > capacity())
       reallocate(n);
@@ -25,7 +28,7 @@ public:
 
 private:
   void chk_n_alloc() {
-    if (size() == 0)
+    if (size() == capacity())
       reallocate();
   }
   std::pair<std::string *, std::string *> alloc_n_copy(const std::string *,

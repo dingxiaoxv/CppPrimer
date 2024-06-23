@@ -1,9 +1,14 @@
 #include "message.h"
 #include <iostream>
+#include <utility>
 
 Message::Message(const Message &m)
     : contents_(m.contents_), folders_(m.folders_) {
   addToFolders(m);
+}
+
+Message::Message(Message &&m) : contents_(std::move(m.contents_)) {
+  moveFolders(&m);
 }
 
 Message::~Message() { removeFromFolders(); }
@@ -26,13 +31,9 @@ void Message::removeFrom(Folder &f) {
   f.remMsg(this);
 }
 
-void Message::addFldr(Folder *f) {
-  folders_.insert(f);
-}
+void Message::addFldr(Folder *f) { folders_.insert(f); }
 
-void Message::remFldr(Folder *f) {
-  folders_.erase(f);
-}
+void Message::remFldr(Folder *f) { folders_.erase(f); }
 
 void Message::addToFolders(const Message &m) {
   for (auto f : m.folders_) {
@@ -44,6 +45,15 @@ void Message::removeFromFolders() {
   for (auto f : folders_) {
     f->remMsg(this);
   }
+}
+
+void Message::moveFolders(Message *m) {
+  folders_ = std::move(m->folders_);
+  for (auto f : folders_) {
+    f->remMsg(m);
+    f->addMsg(this);
+  }
+  m->folders_.clear();
 }
 
 Folder::Folder(const Folder &f) : name_(f.name_), msgs_(f.msgs_) {
