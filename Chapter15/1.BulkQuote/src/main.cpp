@@ -16,5 +16,8 @@ int main(int argc, char *argv[]) {
   print_total(std::cout, bulk, 20);
   print_total(std::cout, limit, 20);
 
+  BulkQuote b(bulk), c;
+  c = bulk;
+
   return 0;
 }
