@@ -40,8 +40,6 @@ private:
       throw std::out_of_range(msg);
     }
   }
-
-private:
   std::shared_ptr<std::vector<std::string>> data_;
 };
 
@@ -78,8 +76,6 @@ private:
 
     return ret;
   }
-
-private:
   std::weak_ptr<std::vector<std::string>> wptr_;
   std::size_t curr_;
 };
